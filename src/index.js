@@ -16,13 +16,9 @@ let input = '    JavaScript     ';
 let output = '<div>' + input.trim() + '</div>';
 
 const trim = (str) => str.trim();
-const wrapInDiv = (str) => `<div>${str}</div>`;
+const wrap = (type) => (str) => `<${type}>${str}</${type}>`; // currying function
 const toLowerCase = (str) => str.toLowerCase();
 
-const transform1 = compose(wrapInDiv, toLowerCase, trim); // read from right to left
-const transform2 = pipe(trim, toLowerCase, wrapInDiv); // read from left to right
+const transform = pipe(trim, toLowerCase, wrap('span')); // read from left to right
 
-transform1(input);
-transform2(input);
-
-// const result = wrapInDiv(toLowerCase(trim(input))); // no need this ugly code
+console.log(transform(input));
