@@ -1,24 +1,27 @@
-// import { produce } from 'immer';
-// let book = { title: 'Harry Potter' };
+const person = { name: 'John' };
+const _updated = Object.assign({}, person, { name: 'Bob', age: 30 }); // copy the content of an object to another object
+const updated = { ...person, name: 'Bob', age: 30 }; // another easy way to copy an object to another object
+// both of these are shallow copy
+console.log(updated);
 
-// function publish(book) {
-//   return produce(book, (draftBook) => {
-//     draftBook.isPublished = true;
-//   });
-// }
+// shallow copy example:
+const person2 = {
+  name: 'John',
+  address: {
+    country: 'USA',
+    city: 'San Francisco',
+  },
+};
+const updated2 = { ...person2, name: 'Bob' };
+updated2.address.city = 'New York';
+console.log(person2); // person2's city also change to 'New York', because it's shallow copy
 
-// let updated = publish(book);
-// console.log(book);
-// console.log(updated);
-import { compose, pipe } from 'lodash/fp';
-
-let input = '    JavaScript     ';
-let output = '<div>' + input.trim() + '</div>';
-
-const trim = (str) => str.trim();
-const wrap = (type) => (str) => `<${type}>${str}</${type}>`; // currying function
-const toLowerCase = (str) => str.toLowerCase();
-
-const transform = pipe(trim, toLowerCase, wrap('span')); // read from left to right
-
-console.log(transform(input));
+// deep copy example:
+const updated3 = {
+  ...person2,
+  name: 'Bob',
+  address: {
+    ...person2.address,
+    city: 'New York',
+  },
+};
