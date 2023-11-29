@@ -4,4 +4,4 @@ import { loadBugs } from './store/bugs';
 const store = configureStore();
 
 // UI Layer
-store.dispatch(loadBugs(loadBugs()));
+store.dispatch(loadBugs());
