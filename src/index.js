@@ -41,3 +41,8 @@ store.dispatch((dispatch, getState) => {
   console.log(getState());
   // If the promise is rejected => dispatch()
 });
+
+store.dispatch({
+  type: 'error',
+  payload: { message: 'An error occurred.' },
+});
