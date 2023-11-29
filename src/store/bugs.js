@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { createSelector } from 'reselect';
 
 let lastId = 0;
 
@@ -23,6 +24,15 @@ const slice = createSlice({
 export const { bugAdded, bugResolved } = slice.actions;
 export default slice.reducer;
 
-// Selector
-export const getUnresolvedBugs = (state) =>
-  state.entities.bugs.filter((bug) => !bug.resolved);
+// // Selector
+// export const getUnresolvedBugs = (state) =>
+//   state.entities.bugs.filter((bug) => !bug.resolved);
+
+// Memoization: optimizing expensive functions
+// this selector will return the result from the cache
+export const getUnresolvedBugs = createSelector(
+  (state) => state.entities.bugs,
+  (state) => state.entities.projects,
+  // if the list of bugs and projects remain unchanged, this logic is not going to be recalculated again
+  (bugs, projects) => bugs.filter((bug) => !bug.resolved)
+);
